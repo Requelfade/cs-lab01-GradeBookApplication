@@ -16,11 +16,24 @@ namespace GradeBook.GradeBooks
             int studentsCount = Students.Count;
             if (studentsCount < 5) throw new InvalidOperationException();
 
-            int studentsStep = studentsCount / 5;
+            double[] gradesList = new double[studentsCount];
+
+            for (int i = 0; i < studentsCount; i++)
+            {
+                gradesList[i] = Students[i].AverageGrade;
+            }
+
+            Array.Sort(gradesList);
+            string grades = "FDCBA";
+
+            for (int i = 5; i > 0; i--)
+            {
+                double percentile = i * studentsCount / 5 - 1;
+                if (gradesList[(int)Math.Ceiling(percentile)] <= averageGrade) return grades[i - 1];
+            }
 
 
-
-            return base.GetLetterGrade(averageGrade);
+            return 'F';
         }
     }
 }
