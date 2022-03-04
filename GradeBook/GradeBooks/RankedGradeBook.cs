@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GradeBook.GradeBooks
 {
-    class RankedGradeBook : BaseGradeBook
+    public class RankedGradeBook : BaseGradeBook
     {
         public RankedGradeBook(string name, bool isWeighted) : base(name, isWeighted)
         {
@@ -36,6 +36,16 @@ namespace GradeBook.GradeBooks
             return 'F';
         }
 
+        public override void CalculateStatistics()
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students.");
+                return;
+            }
+            base.CalculateStatistics();
+        }
+
         public override void CalculateStudentStatistics(string name)
         {
             if (Students.Count < 5)
@@ -43,11 +53,8 @@ namespace GradeBook.GradeBooks
                 Console.WriteLine("Ranked grading requires at least 5 students.");
                 return;
             }
-
-            if (Students.Count >= 5)
-            {
-                base.CalculateStatistics();
-            }
+            
+            base.CalculateStudentStatistics(name);
         }
     }
 }
